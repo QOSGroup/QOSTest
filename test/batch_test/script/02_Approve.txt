@@ -1,0 +1,50 @@
+# 打印密钥列表
+qoscli keys list
+
+# 创建预授权: 授权人bob, 被授权人charles, 要创建的预授权: 5,000,000QOS, 预期交易成功
+qoscli tx create-approve --from bob --to charles --coins 5000000QOS --indent <== 12345678
+
+# 查询预授权, 此时预授权余额: 5,000,000QOS, 预授权总量未超出授权人账户余额
+qoscli query approve --from bob --to charles --indent
+
+# 增加预授权: 授权人bob, 被授权人charles, 要增加的预授权: 5,000,000QOS, 预期交易成功
+qoscli tx increase-approve --from bob --to charles --coins 5000000QOS --indent <== 12345678
+
+# 查询预授权, 此时预授权余额: 10,000,000QOS, 预授权总量正好等于授权人账户余额
+qoscli query approve --from bob --to charles --indent
+
+# 再次增加预授权: 授权人bob, 被授权人charles, 要增加的预授权: 5,000,000QOS, 预期交易成功
+qoscli tx increase-approve --from bob --to charles --coins 5000000QOS --indent <== 12345678
+
+# 查询预授权, 此时预授权余额: 15,000,000QOS, 预授权总量超出授权人账户余额
+qoscli query approve --from bob --to charles --indent
+
+# 减少预授权: 授权人bob, 被授权人charles, 要减少的预授权: 3,000,000QOS, 预期交易成功
+qoscli tx decrease-approve --from bob --to charles --coins 3000000QOS --indent <== 12345678
+
+# 查询预授权, 此时预授权余额: 12,000,000QOS, 预授权总量仍超出授权人账户余额
+qoscli query approve --from bob --to charles --indent
+
+# 使用预授权: 授权人bob, 被授权人charles, 要使用的预授权: 1,000,000QOS, 使用的预授权未超出授权人账户余额, 预期交易成功
+qoscli tx use-approve --from bob --to charles --coins 1000000QOS --indent <== 12345678
+
+# 查询预授权, 此时预授权余额: 11,000,000QOS, 预授权总量仍超出授权人账户余额
+qoscli query approve --from bob --to charles --indent
+
+# 使用预授权: 授权人bob, 被授权人charles, 要使用的预授权: 10,000,000QOS, 使用的预授权超出授权人账户余额, 预期交易失败
+qoscli tx use-approve --from bob --to charles --coins 10000000QOS --indent <== 12345678
+
+# 查询预授权: 此时预授权余额: 11,000,000QOS, 预授权总量未发生变动
+qoscli query approve --from bob --to charles --indent
+
+# 取消预授权: 授权人bob, 被授权人charles, 预期交易成功
+qoscli tx cancel-approve --from bob --to charles --indent <== 12345678
+
+# 查询预授权: 此时预授权被取消, 原预授权已经不存在
+qoscli query approve --from bob --to charles --indent
+
+# 重复取消预授权: 原预授权已经不存在, 预期交易失败
+qoscli tx cancel-approve --from bob --to charles --indent <== 12345678
+
+# 查询预授权: 此时预授权已经不存在
+qoscli query approve --from bob --to charles --indent

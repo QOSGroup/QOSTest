@@ -1,0 +1,156 @@
+
+================================================================
+
+> # 打印密钥列表
+
+================================================================
+
+== [ 2019-09-19 18:08:41 ] Command [ No.1 ]
+
+> qoscli keys list
+
+--------------------------------
+Expect命令:
+expect 2>&1 /home/admin/qos/expect/run_cmd_via_ssh.expect 192.168.2.129 admin admin '~/qos/bin/qoscli keys list' 
+命令执行结果:
+NAME:	TYPE:	ADDRESS:						PUBKEY:
+alice	import	qosacc1eqqnaps04l6ht9xahtrfgg59ksllcq9q85vje2	qosaccpub1zcjduepqzxez575h0j4kl0z7wn3muk4rn4n0265mwykyjguf9wh47nn8hqvqq2cqk9
+bob	import	qosacc15fc26swvguzy9wksha9506smj2gne5r3jd978f	qosaccpub1zcjduepqxm2rfregh04ajq9q0j7eywr0emauus27dacwht4xp7l6l6grv9gqfvvycx
+charles	import	qosacc1f37jvnehrfkpwzqtqtu5q9jx57034gvvtv5a36	qosaccpub1zcjduepq2g57x807xxw9e5utfdw6hmeg585y4qaazc9fw4am3u3alwggw0psk54pky
+david	import	qosacc1n4sganm7v445h0dlqnlcq8hp8xgenl2sszd5pm	qosaccpub1zcjduepq6prl8a6k3hdnlq3dre2h8aar55yamhgrgu8vtak56wj6j2s5vzesgxhmt4
+node	import	qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm	qosaccpub1zcjduepqayn33delk6nledgejr0dz7azd3wnp4xncn4jvd4r6xxcydgcz64q6n2tr8
+qcpSigner	import	qosacc1dkcds02rw2nwme34wvq4uym83nh8rz05h6x7nr	qosaccpub1zcjduepqyx6gejddufrke37hqkuu95wmn94xa3gjeqrmcfc56qpshq0l8mxqzlp2c2
+starBanker	import	qosacc1xhlsragqdn0cp7a2dcf45fy8j0nej9jlrv753m	qosaccpub1zcjduepq7xhz09qgamfr3eqlpzy2cp8z9482j75f8x08sh005ryx4e8jds0s538my2
+命令执行耗时: 539 ms
+结果处理耗时: 6 ms
+--------------------------------
+
+
+================================================================
+
+> # 创建预授权: 授权人bob, 被授权人charles, 要创建的预授权: 5,000,000QOS, 预期交易成功
+
+================================================================
+
+== [ 2019-09-19 18:08:41 ] Command [ No.2 ]
+
+> qoscli tx create-approve --from bob --to charles --coins 5000000QOS --indent <== 12345678
+
+== 交易之前 ==
+
+==== 可用交易列表 ====
+
+| Index | Value                                                                                                                    |
+| ----: | :----------------------------------------------------------------------------------------------------------------------- |
+|     0 | active-validator                                                                                                         |
+|     1 | add-guardian                                                                                                             |
+|     2 | cancel-approve                                                                                                           |
+|     3 | create-approve                                                                                                           |
+|     4 | create-qsc                                                                                                               |
+|     5 | create-validator                                                                                                         |
+|     6 | decrease-approve                                                                                                         |
+|     7 | delegate                                                                                                                 |
+|     8 | delete-guardian                                                                                                          |
+|     9 | deposit                                                                                                                  |
+|    10 | halt-network                                                                                                             |
+|    11 | increase-approve                                                                                                         |
+|    12 | init-qcp                                                                                                                 |
+|    13 | invariant-check                                                                                                          |
+|    14 | issue-qsc                                                                                                                |
+|    15 | modify-compound                                                                                                          |
+|    16 | modify-validator                                                                                                         |
+|    17 | redelegate                                                                                                               |
+|    18 | revoke-validator                                                                                                         |
+|    19 | submit-proposal                                                                                                          |
+|    20 | transfer                                                                                                                 |
+|    21 | unbond                                                                                                                   |
+|    22 | use-approve                                                                                                              |
+|    23 | vote                                                                                                                     |
+
+==== 本地密钥名称-账户地址映射表 ====
+
+| Index | Account Address                               | Key Name                                                                 |
+| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |
+|     0 | qosacc1eqqnaps04l6ht9xahtrfgg59ksllcq9q85vje2 | alice                                                                    |
+|     1 | qosacc15fc26swvguzy9wksha9506smj2gne5r3jd978f | bob                                                                      |
+|     2 | qosacc1f37jvnehrfkpwzqtqtu5q9jx57034gvvtv5a36 | charles                                                                  |
+|     3 | qosacc1n4sganm7v445h0dlqnlcq8hp8xgenl2sszd5pm | david                                                                    |
+|     4 | qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm | node                                                                     |
+|     5 | qosacc1dkcds02rw2nwme34wvq4uym83nh8rz05h6x7nr | qcpSigner                                                                |
+|     6 | qosacc1xhlsragqdn0cp7a2dcf45fy8j0nej9jlrv753m | starBanker                                                               |
+
+==== 用户账户地址列表 ====
+
+| Index | Account Address                               | Key Name                                                                 |
+| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |
+|     0 | qosacc15fc26swvguzy9wksha9506smj2gne5r3jd978f | bob                                                                      |
+|     1 | qosacc1dkcds02rw2nwme34wvq4uym83nh8rz05h6x7nr | qcpSigner                                                                |
+|     2 | qosacc1eqqnaps04l6ht9xahtrfgg59ksllcq9q85vje2 | alice                                                                    |
+|     3 | qosacc1f37jvnehrfkpwzqtqtu5q9jx57034gvvtv5a36 | charles                                                                  |
+|     4 | qosacc1n4sganm7v445h0dlqnlcq8hp8xgenl2sszd5pm | david                                                                    |
+|     5 | qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm | node                                                                     |
+|     6 | qosacc1xhlsragqdn0cp7a2dcf45fy8j0nej9jlrv753m | starBanker                                                               |
+
+==== 用户账户余额情况: QOS ====
+
+| Index | Account Address                               | Key Name                   | Balance              | Balance Change       |
+| ----: | :-------------------------------------------: | -------------------------: | -------------------: | -------------------: |
+|     0 | qosacc15fc26swvguzy9wksha9506smj2gne5r3jd978f |                        bob |              9998104 |                    0 |
+|     1 | qosacc1dkcds02rw2nwme34wvq4uym83nh8rz05h6x7nr |                  qcpSigner |                    0 |                    0 |
+|     2 | qosacc1eqqnaps04l6ht9xahtrfgg59ksllcq9q85vje2 |                      alice |              4999886 |                    0 |
+|     3 | qosacc1f37jvnehrfkpwzqtqtu5q9jx57034gvvtv5a36 |                    charles |             10000000 |                    0 |
+|     4 | qosacc1n4sganm7v445h0dlqnlcq8hp8xgenl2sszd5pm |                      david |                   16 |                    0 |
+|     5 | qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm |                       node |       49000134416759 |                    0 |
+|     6 | qosacc1xhlsragqdn0cp7a2dcf45fy8j0nej9jlrv753m |                 starBanker |             10000020 |                    0 |
+
+==== 用户账户余额情况: QSC 'star' ====
+
+| Index | Account Address                               | Key Name                   | Balance              | Balance Change       |
+| ----: | :-------------------------------------------: | -------------------------: | -------------------: | -------------------: |
+|     0 | qosacc15fc26swvguzy9wksha9506smj2gne5r3jd978f |                        bob |                    0 |                    0 |
+|     1 | qosacc1dkcds02rw2nwme34wvq4uym83nh8rz05h6x7nr |                  qcpSigner |                    0 |                    0 |
+|     2 | qosacc1eqqnaps04l6ht9xahtrfgg59ksllcq9q85vje2 |                      alice |                    0 |                    0 |
+|     3 | qosacc1f37jvnehrfkpwzqtqtu5q9jx57034gvvtv5a36 |                    charles |                    0 |                    0 |
+|     4 | qosacc1n4sganm7v445h0dlqnlcq8hp8xgenl2sszd5pm |                      david |                    0 |                    0 |
+|     5 | qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm |                       node |                    0 |                    0 |
+|     6 | qosacc1xhlsragqdn0cp7a2dcf45fy8j0nej9jlrv753m |                 starBanker |                    0 |                    0 |
+
+== 执行交易 ==
+
+~/qos/bin/qoscli tx create-approve --from bob --to charles --coins 5000000QOS --indent 
+
+== 原始交易结果 ==
+
+
+--------------------------------
+Expect命令:
+expect 2>&1 /home/admin/qos/expect/run_cmd_via_ssh.expect 192.168.2.129 admin admin '~/qos/bin/qoscli tx create-approve --from bob --to charles --coins 5000000QOS --indent' 12345678
+命令执行结果:
+{
+  "check_tx": {
+    "code": 1,
+    "log": "{\"codespace\":\"sdk\",\"code\":1,\"message\":\"TxStd's ITx ValidateData error:  ERROR:\\nCodespace: approve\\nCode: 103\\nMessage: \\\"approve exists\\\"\\n\"}",
+    "gasWanted": "9223372036854775807",
+    "gasUsed": "2393",
+    "events": []
+  },
+  "deliver_tx": {},
+  "hash": "5D7E968A0A43D8987EA9EB84A9A81B21D31C1734BA280D9B208E654BEF8672C8",
+  "height": "0"
+}
+ERROR: {"codespace":"sdk","code":1,"message":"TxStd's ITx ValidateData error:  ERROR:\nCodespace: approve\nCode: 103\nMessage: \"approve exists\"\n"}
+命令执行耗时: 931 ms
+结果处理耗时: 8 ms
+--------------------------------
+
+== 提取交易哈希 ==
+
+5D7E968A0A43D8987EA9EB84A9A81B21D31C1734BA280D9B208E654BEF8672C8
+
+== 查询链上交易记录 ==
+
+ERROR: Tx: response error: RPC error -32603 - Internal error: Tx (5D7E968A0A43D8987EA9EB84A9A81B21D31C1734BA280D9B208E654BEF8672C8) not found
+
+错误: 未查询到链上交易记录
+
+== 交易失败 ==

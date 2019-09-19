@@ -1,0 +1,191 @@
+# 打印密钥列表
+qoscli keys list
+
+# 查询验证人列表: 此时应该只有1个验证人: node
+qoscli query validators --indent
+
+# 创建验证人节点: 令普通用户alice成为验证人Owner, 禁用复投, 预期交易成功
+qoscli tx create-validator --moniker v_alice --owner alice --tokens 5000000 --indent <== 12345678
+
+# 查询验证人列表: 此时应该有2个验证人: node, alice
+eval "~/qos/bin/qoscli query validators --indent" | tee vals.temp
+
+# 提取验证人v_alice的验证人地址
+cat vals.temp | head -n $[$(cat vals.temp | grep -no "v_node" | grep -Po "^[0-9]*") - 6] | tail -n 1 | grep -Po "qosval[0-9a-zA-Z]*" | tee v_node.temp
+
+# 提取验证人v_node的验证人地址
+cat vals.temp | head -n $[$(cat vals.temp | grep -no "v_alice" | grep -Po "^[0-9]*") - 6] | tail -n 1 | grep -Po "qosval[0-9a-zA-Z]*" | tee v_alice.temp
+
+# 发起委托: 委托人charles, 验证人node, 禁用复投, 预期交易成功
+qoscli tx delegate --validator $(cat v_node.temp) --delegator charles --tokens 5000000 --indent <== 12345678
+
+# 查询委托: 委托人charles, 验证人node, 检查新创建的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 修改复投方式: 由禁用复投修改为禁用复投, 预期交易失败
+qoscli tx modify-compound --validator $(cat v_node.temp) --delegator charles --indent <== 12345678
+
+# 修改复投方式: 由禁用复投修改为启用复投, 预期交易成功
+qoscli tx modify-compound --validator $(cat v_node.temp) --delegator charles --compound --indent <== 12345678
+
+# 查询委托: 委托人charles, 验证人node, 检查委托复投方式修改情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 修改复投方式: 由启用复投修改为启用复投, 预期交易失败
+qoscli tx modify-compound --validator $(cat v_node.temp) --delegator charles --compound --indent <== 12345678
+
+# 修改复投方式: 由启用复投修改为禁用复投, 预期交易成功
+qoscli tx modify-compound --validator $(cat v_node.temp) --delegator charles --indent <== 12345678
+
+# 查询委托: 委托人charles, 验证人node, 检查委托复投方式修改情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 解除绑定: 委托人charles, 验证人node, 解绑一半, 预期交易成功
+qoscli tx unbond --validator $(cat v_node.temp) --delegator charles --tokens 2500000 --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询委托: 委托人charles, 验证人node, 检查部分解绑后的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 解除绑定: 委托人charles, 验证人node, 再解绑剩余所有, 预期交易成功
+qoscli tx unbond --validator $(cat v_node.temp) --delegator charles --all --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询委托: 委托人charles, 验证人node, 检查完全解绑后的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 发起委托: 委托人charles, 验证人node, 启用复投, 预期交易成功
+qoscli tx delegate --validator $(cat v_node.temp) --delegator charles --tokens 2000000 --compound --indent <== 12345678
+
+# 查询委托: 委托人charles, 验证人node, 检查新创建的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 重新委托: 委托人charles, 原验证人node, 新验证人alice, 转移一半, 预期交易成功
+qoscli tx redelegate --from-validator $(cat v_node.temp) --to-validator $(cat v_alice.temp) --delegator charles --tokens 1000000 --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询委托: 委托人charles, 验证人node, 检查委托被部分转移之后原验证人处的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 查询委托: 委托人charles, 验证人alice, 检查委托被部分转移之后新验证人处的委托情况
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 重新委托: 委托人charles, 原验证人node, 新验证人alice, 转移剩余所有, 禁用复投, 预期交易成功
+qoscli tx redelegate --from-validator $(cat v_node.temp) --to-validator $(cat v_alice.temp) --delegator charles --all --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询委托: 委托人charles, 验证人node, 检查委托被完全转移之后原验证人处的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 查询委托: 委托人charles, 验证人alice, 检查委托被完全转移之后新验证人处的委托情况
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 修改验证人alice节点描述: 验证人节点处于活跃状态, 普通用户bob发起修改, 预期交易失败
+qoscli tx modify-validator --validator $(cat v_alice.temp) --owner bob --moniker v_alice_modified_by_bob  --details "details_modified_by_bob" --logo "logo_modified_by_bob" --website "website_modified_by_bob" --indent <== 12345678
+
+# 修改验证人alice节点描述: 验证人节点处于活跃状态, 验证人Owner用户alice发起修改, 预期交易成功
+qoscli tx modify-validator --validator $(cat v_alice.temp) --owner alice --moniker v_alice_modified_by_alice  --details "details_modified_by_alice" --logo "logo_modified_by_alice" --website "website_modified_by_alice" --indent <== 12345678
+
+# 查询验证人alice节点: 查看验证人alice节点描述修改情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 激活验证人alice节点: 验证人节点处于活跃状态, 由验证人Owner用户alice发起, 预期交易失败
+qoscli tx active-validator --validator $(cat v_alice.temp) --owner alice --indent <== 12345678
+
+# 关停(revoke)验证人alice节点: 验证人节点处于活跃状态, 普通用户bob发起, 预期交易失败
+qoscli tx revoke-validator --validator $(cat v_alice.temp) --owner bob --indent <== 12345678
+
+# 关停(revoke)验证人alice节点: 验证人节点处于活跃状态, 验证人Owner用户alice发起, 预期交易成功
+qoscli tx revoke-validator --validator $(cat v_alice.temp) --owner alice --indent <== 12345678
+
+# 查询验证人alice节点: 查看验证人节点的活跃状态改变情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 查询委托: 委托人charles, 验证人alice, 检查验证人被关停时绑定的委托是如何被处理的
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 修改验证人alice节点描述: 验证人节点处于关停状态, 普通用户bob发起修改, 预期交易失败
+qoscli tx modify-validator --validator $(cat v_alice.temp) --owner bob --moniker v_alice_modified_by_bob_in_revoke  --details "details_modified_by_bob_in_revoke" --logo "logo_modified_by_bob_in_revoke" --website "website_modified_by_bob_in_revoke" --indent  <== 12345678
+
+# 修改验证人alice节点描述: 验证人节点处于关停状态, 验证人Owner用户alice发起修改, 预期交易成功
+qoscli tx modify-validator --validator $(cat v_alice.temp) --owner alice --moniker v_alice_modified_by_alice_in_revoke --details "details_modified_by_alice_in_revoke" --logo "logo_modified_by_alice_in_revoke" --website "website_modified_by_alice_in_revoke" --indent <== 12345678
+
+# 查询验证人alice节点: 查看对关停后验证人alice节点描述的修改情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 发起委托: 委托人charles, 验证人node, 验证人节点处于活跃状态, 启用复投, 预期交易成功
+qoscli tx delegate --validator $(cat v_node.temp) --delegator charles --tokens 1000000 --compound --indent <== 12345678
+
+# 查询委托: 查看向验证人node节点发起的委托是否成功
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 查询验证人node节点: 查看验证人接收委托后VotingPower变化情况
+qoscli query validator $(cat v_node.temp) --indent
+
+# 发起委托: 委托人charles, 验证人alice, 启用复投, 预期交易成功
+qoscli tx delegate --validator $(cat v_alice.temp) --delegator charles --tokens 1000000 --compound --indent <== 12345678
+
+# 查询委托: 查看向关停后验证人alice节点发起的委托是否成功
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 查询验证人alice节点: 查看关停后验证人接收委托后VotingPower变化情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 重新委托: 委托人charles, 原验证人node, 新验证人alice, 转移所有, 启用复投, 测试由活跃验证人节点node向关停验证人节点alice转移委托
+qoscli tx redelegate --from-validator $(cat v_node.temp) --to-validator $(cat v_alice.temp) --delegator charles --all --compound --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询委托: 委托人charles, 验证人node, 检查委托被完全转移之后原验证人处的委托情况
+qoscli query delegation --validator $(cat v_node.temp) --delegator charles --indent
+
+# 查询委托: 委托人charles, 验证人alice, 检查委托被完全转移之后新验证人处的委托情况
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 查询验证人列表: 查看验证人节点VotingPower变化情况
+qoscli query validators --indent
+
+# 激活验证人alice节点: 验证人节点处于关停状态, 验证人Owner用户alice, 预期交易成功
+qoscli tx active-validator --validator $(cat v_alice.temp) --owner alice --indent <== 12345678
+
+# 查询验证人alice节点: 查看验证人节点的活跃状态改变情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 查询委托: 查看验证人从关停状态被激活后VotingPower变化情况
+qoscli query delegation --validator $(cat v_alice.temp) --delegator charles --indent
+
+# 解除绑定: 委托人alice, 验证人alice, 解绑所有, 预期交易成功
+qoscli tx unbond --validator $(cat v_alice.temp) --delegator alice --all --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询验证人alice节点: 查看验证人节点解绑自己的所有token之后的情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 解除绑定: 委托人charles, 验证人alice, 解绑所有, 预期交易成功
+qoscli tx unbond --validator $(cat v_alice.temp) --delegator charles --all --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询验证人alice节点: 查看验证人节点解绑所有token之后的情况
+qoscli query validator $(cat v_alice.temp) --indent
+
+# 解除绑定: 委托人charles, 验证人node, 解绑所有, 预期交易成功
+qoscli tx unbond --validator $(cat v_node.temp) --delegator charles --all --indent <== 12345678
+
+# 等待10秒
+sleep 10
+
+# 查询charles账户余额 
+qoscli query account charles --indent 

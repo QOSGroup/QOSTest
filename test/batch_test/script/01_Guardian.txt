@@ -1,0 +1,35 @@
+# 打印密钥列表
+qoscli keys list
+
+# 查询特权用户列表, 此时应该一共有1个特权用户: Genesis特权用户node
+qoscli query guardians --indent
+
+# 新增特权账户alice, 指定的creator是Genesis特权用户node, 预期交易成功
+qoscli tx add-guardian --address alice --creator node --description 'Simple-Guardian-Alice' --indent <== 12345678
+
+# 查询特权用户列表, 此时应该一共有2个特权用户: Genesis特权用户node, 普通特权用户alice
+qoscli query guardians --indent
+
+# 新增特权账户charles, 指定的creator是普通用户bob, 预期交易失败
+qoscli tx add-guardian --address charles --creator bob --description 'Simple-Guardian-Charles' --indent <== 12345678
+
+# 新增特权账户charles, 指定的creator是普通特权用户alice, 预期交易失败
+qoscli tx add-guardian --address charles --creator alice --description 'Simple-Guardian-Charles' --indent <== 12345678
+
+# 新增特权账户charles, 指定的creator是Genesis特权用户node, 预期交易成功
+qoscli tx add-guardian --address charles --creator node --description 'Simple-Guardian-Charles' --indent <== 12345678
+
+# 查询特权用户列表, 此时应该一共有3个特权用户: Genesis特权用户node, 普通特权用户alice, 普通特权用户charles
+qoscli query guardians --indent
+
+# 删除特权用户charles, 指定的creator是普通用户bob, 预期交易失败
+qoscli tx delete-guardian --address charles --deleted-by bob --indent <== 12345678
+
+# 删除特权用户charles, 指定的creator是普通特权用户alice, 预期交易失败
+qoscli tx delete-guardian --address charles --deleted-by alice --indent <== 12345678
+
+# 删除特权用户charles, 指定的creator是Genesis特权用户node, 预期交易成功
+qoscli tx delete-guardian --address charles --deleted-by node --indent <== 12345678
+
+# 查询特权用户列表, 此时应该一共有2个特权用户: Genesis特权用户node, 普通特权用户alice
+qoscli query guardians --indent

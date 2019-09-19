@@ -1,0 +1,19 @@
+#!/usr/bin/expect
+# Usage Example: 
+# expect import_key.expect ~/qos/qoscli node1 12345678 tKFI6TwnYSV2ONVfW5xTappKiwnf0kvMClxPOmPKwFjpJxi3P7an/LUZkN7Re6JsXTDU08TrJjaj0Y2CNRgWqg==
+
+# expect config
+set timeout 10
+
+# prepare args
+set qoscli [lindex $argv 0]
+set name [lindex $argv 1]
+set pwd [lindex $argv 2]
+set pri_key [lindex $argv 3]
+
+# execute import
+spawn -noecho bash -c "$qoscli keys import $name"
+expect "Enter ed25519 private key:" {send "$pri_key\r"}
+expect "Enter a passphrase for your key:" {send "$pwd\r"}
+expect "Repeat the passphrase:" {send "$pwd\r"}
+expect EOF

@@ -1,0 +1,19 @@
+#!/usr/bin/expect
+# Usage Example: 
+# expect run_tx_cmd.expect "~/qoscli transfer --senders 'alice,1000qos;bob,1000qos' --receivers 'charles,1000qos;node,1000qos' --indent"
+
+# expect config
+set timeout 10
+
+# qos config
+set qos_pwd "12345678"
+
+# prepare tx cmd
+set tx_cmd [lindex $argv 0]
+
+# execute cmd
+spawn -noecho bash -c "$tx_cmd"
+expect {
+  "Password to sign with '*':" {send "$qos_pwd\r";exp_continue;}
+  EOF
+}

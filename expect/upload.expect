@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+# Usage Example: 
+# expect upload.expect "192.168.1.224" "vagrant" "qianbao2019" "./run_tx_cmd.expect" "~/run_tx_cmd.expect"
+
+# expect config
+set timeout 10 
+
+# prepare tx and args
+set host [lindex $argv 0]
+set username [lindex $argv 1]
+set password [lindex $argv 2]
+set local_filepath [lindex $argv 3]
+set remote_filepath [lindex $argv 4]
+
+# execute cmd
+spawn -noecho bash -c "scp $local_filepath $username@$host:$remote_filepath"
+expect {
+  "$username@$host's password:" {send "$password\r";exp_continue;}
+  EOF
+}

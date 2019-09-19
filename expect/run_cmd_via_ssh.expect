@@ -1,0 +1,20 @@
+#!/usr/bin/expect
+# Usage: expect run_cmd_via_ssh.expect <ssh_host> <ssh_usr> <ssh_pwd> <cmd> [inputs]
+
+# expect config
+set timeout 15
+
+# prepare args
+set ssh_host [lindex $argv 0]
+set ssh_usr [lindex $argv 1]
+set ssh_pwd [lindex $argv 2]
+set cmd [lindex $argv 3]
+
+# execute cmd
+spawn -noecho sshpass -p $ssh_pwd ssh $ssh_usr@$ssh_host "$cmd"
+for {set i 4} {$i<$argc} {incr i} {
+  sleep 0.6
+  send "[lindex $argv $i]\r"
+}
+expect EOF
+

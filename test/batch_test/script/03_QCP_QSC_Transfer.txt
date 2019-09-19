@@ -1,0 +1,56 @@
+# 打印密钥列表
+qoscli keys list
+
+# 查询QCP联盟链列表: 此时应该有0条联盟链
+qoscli query qcp list --indent
+
+# 创建QCP联盟链: 使用modified_qcp.crt, 预期交易失败
+qoscli tx init-qcp --creator bob --qcp.crt ~/qos/certs/qcp-modified.crt --indent <== 12345678
+
+# 创建QCP联盟链: 使用qcp.crt, 预期交易成功
+qoscli tx init-qcp --creator bob --qcp.crt ~/qos/certs/qcp.crt --indent <== 12345678
+
+# 查询QCP联盟链列表: 此时应该有1条联盟链: test-qcp-chain, 且Type in与Type out的MaxSequence都为0
+qoscli query qcp list --indent
+
+# 查询QSC联盟币: 此时应该不存在联盟币star
+qoscli query qsc star --indent
+
+# 创建QSC: 使用modified_qsc.crt, 预期交易失败
+qoscli tx create-qsc --creator charles --qsc.crt ~/qos/certs/qsc-modified.crt --indent <== 12345678
+
+# 创建QSC: 使用qsc.crt, 预期交易成功
+qoscli tx create-qsc --creator charles --qsc.crt ~/qos/certs/qsc.crt --indent <== 12345678
+
+# 查询QSC联盟币: 此时已经能够查到联盟币star
+qoscli query qsc star --indent
+
+# 发行QSC: 指定错误的banker, 预期交易失败
+qoscli tx issue-qsc --qsc-name star --banker alice --amount 50000000 --indent <== 12345678
+
+# 发行QSC: 指定正确的banker, 预期交易成功
+qoscli tx issue-qsc --qsc-name star --banker starBanker --amount 50000000 --indent <== 12345678
+
+# 发起转账: 转账用户错误: 不指定发送人和接收人, 预期交易失败
+qoscli tx transfer --senders '' --receivers '' --indent
+
+# 发起转账: 转账用户错误: 发送人账户不存在, 预期交易失败
+qoscli tx transfer --senders 'david,10000QOS' --receivers 'alice,10000QOS' --indent <== 12345678
+
+# 发起转账: 转账用户错误: 自己发给自己, 预期交易成功
+qoscli tx transfer --senders 'charles,10000QOS' --receivers 'charles,10000QOS' --indent <== 12345678
+
+# 发起转账: 转账金额错误: 转账金额超过Sender余额, 预期交易失败
+qoscli tx transfer --senders 'bob,9999999999999999999QOS' --receivers 'charles,9999999999999999999QOS' --indent <== 12345678
+
+# 发起转账: 转账金额错误: 转账金额不一致, 预期交易失败
+qoscli tx transfer --senders 'bob,10000QOS' --receivers 'charles,9999QOS' --indent <== 12345678
+
+# 发起转账: 公链QOS-QSC混合一对多转账, 预期交易成功
+qoscli tx transfer --senders 'starBanker,2000000qos,2000000star' --receivers 'alice,500000qos,500000star;bob,500000qos,500000star;charles,500000qos,500000star;node,500000qos,500000star' --indent <== 12345678
+
+# 发起转账: 跨链QOS-QSC混合一对多转账, 预期交易成功
+qoscli tx transfer --senders 'starBanker,2000000qos,2000000star' --receivers 'alice,500000qos,500000star;bob,500000qos,500000star;charles,500000qos,500000star;node,500000qos,500000star' --qcp --qcp-from test-qcp-chain --qcp-signer qcpSigner --qcp-blockheight 1 --indent <== 12345678 12345678
+
+# 查询QCP联盟链列表: 此时应该有1条联盟链: test-qcp-chain, 且Type in与Type out的MaxSequence都为1
+qoscli query qcp list --indent
