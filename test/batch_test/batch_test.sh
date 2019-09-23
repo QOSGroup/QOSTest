@@ -4,6 +4,33 @@ source ~/qos/testnet/config.sh
 source ~/qos/test/metrics.sh
 
 # $1 host
+# $2 trimmed_line
+# $3 output
+function handle_cmd(){
+  # parse command and its input
+  cmd=$(trim "$(echo "$2" | awk -F '<==' '{print $1}')")
+  cmd_input=$(trim "$(echo "$2" | awk -F '<==' '{print $2}')")
+
+  # run command
+  if [[ $cmd == qoscli* ]]; then
+    qoscli_cmd=$(trim "${cmd:6}")
+    if [[ $qoscli_cmd == tx* ]];then
+      run_tx_cmd_and_update_metrics $1 "$ssh_qoscli $qoscli_cmd" "$cmd_input" $3
+    else
+      run_remote_cmd $1 "$ssh_qoscli $qoscli_cmd" "$cmd_input" | tee -a $3
+    fi
+  elif [[ $cmd == qosd* ]];then
+    qosd_cmd=$(trim "${cmd:4}")
+    run_remote_cmd $1 "$ssh_qosd $qosd_cmd" "$cmd_input" | tee -a $3
+  elif [[ $cmd == run_local* ]];then
+    local_cmd=$(trim "${cmd:9}")
+    run_local_cmd "$local_cmd" | tee -a $3
+  else
+    run_remote_cmd $1 "$cmd" "$cmd_input" | tee -a $3
+  fi
+}
+
+# $1 host
 # $2 input_file
 # $3 output_file
 function handle_script(){
@@ -14,12 +41,14 @@ function handle_script(){
   
   # handle lines in script file
   cmd_index=0
-  line_index=0
-  total=$(awk 'END{print NR}' $input)
-  while [ $line_index -lt $total ]
+  script_line_index=0
+  script_line_total=$(awk 'END{print NR}' $input)
+  #echo "Total line = $script_line_total"
+  while [ "$script_line_index" -lt "$script_line_total " ]
   do
-    let line_index++
-    raw_line=$(awk "NR==$line_index{print}" $input)
+    let script_line_index++
+    #echo "Current line :  $script_line_index  of $script_line_total"
+    raw_line=$(awk "NR==$script_line_index{print}" $input)
     trimmed_line=$(trim "$raw_line")
     if [ -z "$trimmed_line" ];then
       # empty line
@@ -34,29 +63,9 @@ function handle_script(){
       printf "\n================================================================\n" | tee -a $output
       printf "\n== [ %s ] Command [ No.%s ]\n" "$(date '+%Y-%m-%d %H:%M:%S')" $cmd_index | tee -a $output
       printf "\n> %s\n" "$trimmed_line" | tee -a $output
-      
-      # parse command and its input
-      cmd=$(trim "$(echo "$trimmed_line" | awk -F '<==' '{print $1}')")
-      cmd_input=$(trim "$(echo "$trimmed_line" | awk -F '<==' '{print $2}')")
-      
-      # run command
-      if [[ $cmd == qoscli* ]]; then
-        qoscli_cmd=$(trim "${cmd:6}")
-        if [[ $qoscli_cmd == tx* ]];then
-          run_tx_cmd_and_update_metrics $1 "$ssh_qoscli $qoscli_cmd" "$cmd_input" $output
-        else
-          run_remote_cmd $1 "$ssh_qoscli $qoscli_cmd" "$cmd_input" | tee -a $output
-        fi
-      elif [[ $cmd == qosd* ]];then
-        qosd_cmd=$(trim "${cmd:4}")
-        run_remote_cmd $1 "$ssh_qosd $qosd_cmd" "$cmd_input" | tee -a $output
-      elif [[ $cmd == run_local* ]];then
-        local_cmd=$(trim "${cmd:9}")
-        run_local_cmd "$local_cmd" | tee -a $output
-      else
-        run_remote_cmd $1 "$cmd" "$cmd_input" | tee -a $output
-      fi
+      handle_cmd $host "$trimmed_line" $output
     fi
+    #echo "Current line  is done :  $script_line_index  of $script_line_total"
   done
 }
 

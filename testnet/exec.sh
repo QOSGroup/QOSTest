@@ -58,7 +58,7 @@ function run_remote_cmd(){
 # $1 host
 # $2 cmd
 function run_cmd(){
-  sshpass -p $ssh_pwd ssh $ssh_usr@$1 $2
+  sshpass -p $ssh_pwd ssh $ssh_usr@$1 "$2"
 }
 
 # $1 host

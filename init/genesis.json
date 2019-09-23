@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2019-09-18T02:28:41.054560966Z",
+  "genesis_time": "2019-09-23T03:32:01.844653285Z",
   "chain_id": "test-chain",
   "consensus_params": {
     "block": {
@@ -18,13 +18,7 @@
   },
   "app_hash": "",
   "app_state": {
-    "qsc": {
-      "ca_root_pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
-      },
-      "qscs": null
-    },
+    "params": null,
     "guardian": {
       "guardians": [
         {
@@ -35,25 +29,8 @@
         }
       ]
     },
-    "distribution": {
-      "community_fee_pool": "0",
-      "last_block_proposer": "",
-      "pre_distribute_amount": "0",
-      "validators_history_period": null,
-      "validators_current_period": null,
-      "delegator_earning_info": null,
-      "delegator_income_height": null,
-      "validator_eco_fee_pools": null,
-      "params": {
-        "proposer_reward_rate": {
-          "value": "0.010000000000000000"
-        },
-        "community_reward_rate": {
-          "value": "0.020000000000000000"
-        },
-        "delegator_income_period_height": "5",
-        "gas_per_unit_cost": "1000"
-      }
+    "approve": {
+      "approves": null
     },
     "mint": {
       "inflation_phrases": [
@@ -93,12 +70,9 @@
           "applied_amount": "0"
         }
       ],
-      "first_block_time": "1568773721",
+      "first_block_time": "1569209521",
       "applied_qos_amount": "49000000000000",
       "total_qos_amount": "100000000000000"
-    },
-    "approve": {
-      "approves": null
     },
     "stake": {
       "gen_txs": [
@@ -110,7 +84,7 @@
                 "Operator": "qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm",
                 "ConsPubKey": {
                   "type": "tendermint/PubKeyEd25519",
-                  "value": "ThDv85PFCDYwLNhG3kWvGHbk5WQ9EbVXOt9cR8vcsKo="
+                  "value": "hhKXCWuKB1c2gX6BGy7MxE0c6S/+2YD7ilnFOjs/2K8="
                 },
                 "BondTokens": "5000000",
                 "IsCompound": false,
@@ -135,7 +109,7 @@
                 "type": "tendermint/PubKeyEd25519",
                 "value": "6ScYtz+2p/y1GZDe0XuibF0w1NPE6yY2o9GNgjUYFqo="
               },
-              "signature": "lT0U8b87gALkdyNlHX3mncEIWagTPSfA+NGCBwVOwGSZctbwGvhP1NyZzjrJPqTHsWwqd4L4Bb16xZyHTuJqCQ==",
+              "signature": "Q2zK/t9aWAuN8XwWIVBBaP8/UefYUCMkUg39hNN4s9bElIgK3geoRG2+jGLk0Qbkc8oAkT6bL8be4PNgctwlCg==",
               "nonce": "1"
             }
           ],
@@ -161,39 +135,12 @@
       "redelegations_info": null,
       "current_validators": null
     },
-    "params": null,
-    "gov": {
-      "starting_proposal_id": "1",
-      "params": {
-        "normal_min_deposit": "100000",
-        "normal_min_proposer_deposit_rate": "0.334000000000000000",
-        "normal_max_deposit_period": "120000000000",
-        "normal_voting_period": "120000000000",
-        "normal_quorum": "0.334000000000000000",
-        "normal_threshold": "0.500000000000000000",
-        "normal_veto": "0.334000000000000000",
-        "normal_penalty": "0.000000000000000000",
-        "normal_burn_rate": "0.200000000000000000",
-        "important_min_deposit": "100000",
-        "important_min_proposer_deposit_rate": "0.334000000000000000",
-        "important_max_deposit_period": "120000000000",
-        "important_voting_period": "120000000000",
-        "important_quorum": "0.334000000000000000",
-        "important_threshold": "0.500000000000000000",
-        "important_veto": "0.334000000000000000",
-        "important_penalty": "0.000000000000000000",
-        "important_burn_rate": "0.200000000000000000",
-        "critical_min_deposit": "100000",
-        "critical_min_proposer_deposit_rate": "0.334000000000000000",
-        "critical_max_deposit_period": "120000000000",
-        "critical_voting_period": "120000000000",
-        "critical_quorum": "0.334000000000000000",
-        "critical_threshold": "0.500000000000000000",
-        "critical_veto": "0.334000000000000000",
-        "critical_penalty": "0.000000000000000000",
-        "critical_burn_rate": "0.200000000000000000"
+    "qcp": {
+      "ca_root_pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
       },
-      "proposals": null
+      "qcps": null
     },
     "bank": {
       "accounts": [
@@ -235,12 +182,61 @@
       ],
       "lock_info": null
     },
-    "qcp": {
+    "gov": {
+      "starting_proposal_id": "1",
+      "params": {
+        "normal_min_deposit": "100000",
+        "normal_min_proposer_deposit_rate": "0.334000000000000000",
+        "normal_max_deposit_period": "120000000000",
+        "normal_voting_period": "120000000000",
+        "normal_quorum": "0.334000000000000000",
+        "normal_threshold": "0.500000000000000000",
+        "normal_veto": "0.334000000000000000",
+        "normal_penalty": "0.000000000000000000",
+        "normal_burn_rate": "0.200000000000000000",
+        "important_min_deposit": "100000",
+        "important_min_proposer_deposit_rate": "0.334000000000000000",
+        "important_max_deposit_period": "120000000000",
+        "important_voting_period": "120000000000",
+        "important_quorum": "0.334000000000000000",
+        "important_threshold": "0.500000000000000000",
+        "important_veto": "0.334000000000000000",
+        "important_penalty": "0.000000000000000000",
+        "important_burn_rate": "0.200000000000000000",
+        "critical_min_deposit": "100000",
+        "critical_min_proposer_deposit_rate": "0.334000000000000000",
+        "critical_max_deposit_period": "120000000000",
+        "critical_voting_period": "120000000000",
+        "critical_quorum": "0.334000000000000000",
+        "critical_threshold": "0.500000000000000000",
+        "critical_veto": "0.334000000000000000",
+        "critical_penalty": "0.000000000000000000",
+        "critical_burn_rate": "0.200000000000000000"
+      },
+      "proposals": null
+    },
+    "qsc": {
       "ca_root_pub_key": {
         "type": "tendermint/PubKeyEd25519",
         "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
       },
-      "qcps": null
+      "qscs": null
+    },
+    "distribution": {
+      "community_fee_pool": "0",
+      "last_block_proposer": "",
+      "pre_distribute_amount": "0",
+      "validators_history_period": null,
+      "validators_current_period": null,
+      "delegator_earning_info": null,
+      "delegator_income_height": null,
+      "validator_eco_fee_pools": null,
+      "params": {
+        "proposer_reward_rate": "0.010000000000000000",
+        "community_reward_rate": "0.020000000000000000",
+        "delegator_income_period_height": "5",
+        "gas_per_unit_cost": "1000"
+      }
     }
   }
 }
