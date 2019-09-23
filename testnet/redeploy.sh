@@ -27,17 +27,19 @@ function redeploy(){
   remote_init_slave="~/qos/init/init_slave.sh"
   for host in ${ssh_hosts[@]}
   do
-    printf "\n== Upload 'genesis.json' to host: %s \n" $host
-    expect $uploader $host $ssh_usr $ssh_pwd $local_genesis $remote_genesis
-    printf "\n== Upload 'init_slave.sh' to host: %s \n" $host
-    expect $uploader $host $ssh_usr $ssh_pwd $local_init_slave $remote_init_slave
+      if [ "$host" != "$local_ip" -a "$host" != "127.0.0.1" ];then
+      printf "\n== Upload 'genesis.json' to host: %s \n" $host
+      expect $uploader $host $ssh_usr $ssh_pwd $local_genesis $remote_genesis
+      printf "\n== Upload 'init_slave.sh' to host: %s \n" $host
+      expect $uploader $host $ssh_usr $ssh_pwd $local_init_slave $remote_init_slave
+    fi
   done
   
   # step 4.init slave node at hosts
   printf "\n==== step 4.init slave node at hosts \n"
   for host in ${ssh_hosts[@]}
   do
-    if [ "$host" != "$local_ip" ];then
+    if [ "$host" != "$local_ip" -a "$host" != "127.0.0.1" ];then
       printf "\n== Host: %s \n" $host
       run_cmd $host "bash ~/qos/init/init_slave.sh"
     fi

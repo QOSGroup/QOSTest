@@ -3,7 +3,7 @@
 # configs
 echo "1. 准备环境参数"
 
-password="admin"
+password="wf.cy.zs.wzj"
 
 qosd_config_dir=~/.qosd
 qoscli_config_dir=~/.qoscli
@@ -30,7 +30,7 @@ echo " - 关闭防火墙"
 expect -c "
 set timeout 10
 spawn sudo iptables -F
-sleep 1
+sleep 3
 send \"$password\r\"
 expect eof
 "

@@ -1,0 +1,3 @@
+bin/qosd
+bin/qoscli
+*.log

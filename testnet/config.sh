@@ -6,9 +6,9 @@ uploader=~/qos/expect/upload.expect
 local=1
 
 # local ssh config
-ssh_hosts=(192.168.2.128 192.168.2.129 192.168.2.130 192.168.2.131)
-ssh_usr="admin"
-ssh_pwd="admin"
+ssh_hosts=(127.0.0.1)
+ssh_usr="wangzijie"
+ssh_pwd="wf.cy.zs.wzj"
 ssh_qoscli="~/qos/bin/qoscli"
 ssh_qosd="~/qos/bin/qosd"
 ssh_qos_pwd="12345678"

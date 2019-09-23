@@ -15,7 +15,7 @@ root_ca=$qos_dir/certs/root.pub
 genesis_path=$qosd_config_dir/config/genesis.json
 genesis_backup=$qos_dir/init/genesis.json
 
-seeds='0b2e11c192bc218807debe4a963a13d8e21b368e@192.168.2.128:26656'
+seeds='ffa6944e48dcdb0ed6d0dae6fdb1b4fb0bae1f81@192.168.17.52:26656'
 
 echo "1. 清除原有的.qosd和.qoscli目录"
 rm -rf $qosd_config_dir
