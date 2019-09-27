@@ -31,9 +31,10 @@ local=1
 
 # local ssh config
 ssh_hosts=(192.168.10.129 192.168.10.130)
-ssh_pem="~/qos/test.pem"
 ssh_usr="test"
+ssh_pwd_or_pem="pwd" # pwd | pem
 ssh_pwd="12345678"
+ssh_pem="~/qos/test.pem"
 ssh_qoscli="~/qos/bin/qoscli"
 ssh_qosd="~/qos/bin/qosd"
 ssh_qos_pwd="12345678"
