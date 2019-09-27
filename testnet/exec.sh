@@ -22,6 +22,34 @@ function run_local_qoscli(){
   echo "$(~/qos/bin/qoscli $1 2>&1)"
 }
 
+function run_remote_cmd_using_private_key(){
+  # expect run_cmd_via_ssh_using_private_key.expect <ssh_host> <ssh_usr> <ssh_pem> <cmd> [inputs]
+  ts1=$(get_timestamp)
+  expect_script=~/qos/expect/run_cmd_via_ssh_using_private_key.expect
+  expect_cmd="expect 2>&1 $expect_script $1 $ssh_usr $ssh_pem '$2' $3"
+  output=$(eval "$expect_cmd")
+  ts2=$(get_timestamp)
+  delta1=$((ts2-ts1))
+  # remove input from output
+  uniq_input=$(echo "$3" | awk '{for(i=1;i<=NF;i++){print $i}}' | sort -u | uniq)
+  for input in $uniq_input
+  do
+    output=$(echo "$output" | sed "/^$input\r$/d")
+  done
+  ts3=$(get_timestamp)
+  delta2=$((ts3-ts2))
+  # return output
+  echo
+  echo "--------------------------------"
+  echo "Expect命令:"
+  echo "$expect_cmd"
+  echo "命令执行结果:"
+  echo "$output"
+  echo "命令执行耗时: $delta1 ms" 
+  echo "结果处理耗时: $delta2 ms" 
+  echo "--------------------------------" 
+}
+
 # $1 host
 # $2 cmd
 # $3 inputs

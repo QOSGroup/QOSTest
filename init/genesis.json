@@ -1,5 +1,5 @@
 {
-  "genesis_time": "2019-09-23T03:32:01.844653285Z",
+  "genesis_time": "2019-09-27T07:53:55.570144766Z",
   "chain_id": "test-chain",
   "consensus_params": {
     "block": {
@@ -18,20 +18,6 @@
   },
   "app_hash": "",
   "app_state": {
-    "params": null,
-    "guardian": {
-      "guardians": [
-        {
-          "description": "Genesis-Guardian-Node",
-          "guardian_type": 1,
-          "address": "qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm",
-          "creator": ""
-        }
-      ]
-    },
-    "approve": {
-      "approves": null
-    },
     "mint": {
       "inflation_phrases": [
         {
@@ -70,70 +56,76 @@
           "applied_amount": "0"
         }
       ],
-      "first_block_time": "1569209521",
+      "first_block_time": "1569570835",
       "applied_qos_amount": "49000000000000",
       "total_qos_amount": "100000000000000"
     },
-    "stake": {
-      "gen_txs": [
-        {
-          "itx": [
-            {
-              "type": "stake/txs/TxCreateValidator",
-              "value": {
-                "Operator": "qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm",
-                "ConsPubKey": {
-                  "type": "tendermint/PubKeyEd25519",
-                  "value": "hhKXCWuKB1c2gX6BGy7MxE0c6S/+2YD7ilnFOjs/2K8="
-                },
-                "BondTokens": "5000000",
-                "IsCompound": false,
-                "Description": {
-                  "moniker": "v_node",
-                  "logo": "",
-                  "website": "",
-                  "details": ""
-                },
-                "Commission": {
-                  "rate": "0.100000000000000000",
-                  "max_rate": "0.200000000000000000",
-                  "max_change_rate": "0.010000000000000000"
-                },
-                "Delegations": null
-              }
-            }
-          ],
-          "sigature": [
-            {
-              "pubkey": {
-                "type": "tendermint/PubKeyEd25519",
-                "value": "6ScYtz+2p/y1GZDe0XuibF0w1NPE6yY2o9GNgjUYFqo="
-              },
-              "signature": "Q2zK/t9aWAuN8XwWIVBBaP8/UefYUCMkUg39hNN4s9bElIgK3geoRG2+jGLk0Qbkc8oAkT6bL8be4PNgctwlCg==",
-              "nonce": "1"
-            }
-          ],
-          "chainid": "test-chain",
-          "maxgas": "1000000"
-        }
-      ],
+    "params": null,
+    "distribution": {
+      "community_fee_pool": "0",
+      "last_block_proposer": "",
+      "pre_distribute_amount": "0",
+      "validators_history_period": null,
+      "validators_current_period": null,
+      "delegator_earning_info": null,
+      "delegator_income_height": null,
+      "validator_eco_fee_pools": null,
       "params": {
-        "max_validator_cnt": "21",
-        "voting_status_len": "10000",
-        "voting_status_least": "7000",
-        "survival_secs": "28800",
-        "unbond_frozen_height": "1",
-        "max_evidence_age": "1814400000000000",
-        "slash_fraction_double_sign": "0.200000000000000000",
-        "slash_fraction_downtime": "0.000100000000000000"
+        "proposer_reward_rate": "0.010000000000000000",
+        "community_reward_rate": "0.020000000000000000",
+        "delegator_income_period_height": "5",
+        "gas_per_unit_cost": "1000"
+      }
+    },
+    "guardian": {
+      "guardians": [
+        {
+          "description": "Genesis-Guardian-Node",
+          "guardian_type": 1,
+          "address": "qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm",
+          "creator": ""
+        }
+      ]
+    },
+    "qsc": {
+      "ca_root_pub_key": {
+        "type": "tendermint/PubKeyEd25519",
+        "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
       },
-      "validators": null,
-      "val_votes_info": null,
-      "val_votes_in_window": null,
-      "delegators_info": null,
-      "delegator_unbond_info": null,
-      "redelegations_info": null,
-      "current_validators": null
+      "qscs": null
+    },
+    "gov": {
+      "starting_proposal_id": "1",
+      "params": {
+        "normal_min_deposit": "100000",
+        "normal_min_proposer_deposit_rate": "0.334000000000000000",
+        "normal_max_deposit_period": "120000000000",
+        "normal_voting_period": "120000000000",
+        "normal_quorum": "0.334000000000000000",
+        "normal_threshold": "0.500000000000000000",
+        "normal_veto": "0.334000000000000000",
+        "normal_penalty": "0.000000000000000000",
+        "normal_burn_rate": "0.200000000000000000",
+        "important_min_deposit": "100000",
+        "important_min_proposer_deposit_rate": "0.334000000000000000",
+        "important_max_deposit_period": "120000000000",
+        "important_voting_period": "120000000000",
+        "important_quorum": "0.334000000000000000",
+        "important_threshold": "0.500000000000000000",
+        "important_veto": "0.334000000000000000",
+        "important_penalty": "0.000000000000000000",
+        "important_burn_rate": "0.200000000000000000",
+        "critical_min_deposit": "100000",
+        "critical_min_proposer_deposit_rate": "0.334000000000000000",
+        "critical_max_deposit_period": "120000000000",
+        "critical_voting_period": "120000000000",
+        "critical_quorum": "0.334000000000000000",
+        "critical_threshold": "0.500000000000000000",
+        "critical_veto": "0.334000000000000000",
+        "critical_penalty": "0.000000000000000000",
+        "critical_burn_rate": "0.200000000000000000"
+      },
+      "proposals": null
     },
     "qcp": {
       "ca_root_pub_key": {
@@ -141,6 +133,9 @@
         "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
       },
       "qcps": null
+    },
+    "approve": {
+      "approves": null
     },
     "bank": {
       "accounts": [
@@ -182,61 +177,66 @@
       ],
       "lock_info": null
     },
-    "gov": {
-      "starting_proposal_id": "1",
+    "stake": {
+      "gen_txs": [
+        {
+          "itx": [
+            {
+              "type": "stake/txs/TxCreateValidator",
+              "value": {
+                "owner": "qosacc1qgwgmpsrd6anj3qjvjsqztj3xt9v24c4lygasm",
+                "cons_pub_key": {
+                  "type": "tendermint/PubKeyEd25519",
+                  "value": "jomzeiu1xa+RECTSbLuRWM6rA8zzT9fdo1cMFCSHhv0="
+                },
+                "bond_tokens": "5000000",
+                "is_compound": false,
+                "description": {
+                  "moniker": "v_node",
+                  "logo": "",
+                  "website": "",
+                  "details": ""
+                },
+                "commission": {
+                  "rate": "0.100000000000000000",
+                  "max_rate": "0.200000000000000000",
+                  "max_change_rate": "0.010000000000000000"
+                },
+                "delegations": null
+              }
+            }
+          ],
+          "sigature": [
+            {
+              "pubkey": {
+                "type": "tendermint/PubKeyEd25519",
+                "value": "6ScYtz+2p/y1GZDe0XuibF0w1NPE6yY2o9GNgjUYFqo="
+              },
+              "signature": "di9dveRM+9ifrpsQw9O42Y+tZ8FrkFLTaEEyeX/yvLk0xms5Em/ZoYnQaJRm67s0g5kzQczWHyjaLfixM5PrAg==",
+              "nonce": "1"
+            }
+          ],
+          "chainid": "test-chain",
+          "maxgas": "1000000"
+        }
+      ],
       "params": {
-        "normal_min_deposit": "100000",
-        "normal_min_proposer_deposit_rate": "0.334000000000000000",
-        "normal_max_deposit_period": "120000000000",
-        "normal_voting_period": "120000000000",
-        "normal_quorum": "0.334000000000000000",
-        "normal_threshold": "0.500000000000000000",
-        "normal_veto": "0.334000000000000000",
-        "normal_penalty": "0.000000000000000000",
-        "normal_burn_rate": "0.200000000000000000",
-        "important_min_deposit": "100000",
-        "important_min_proposer_deposit_rate": "0.334000000000000000",
-        "important_max_deposit_period": "120000000000",
-        "important_voting_period": "120000000000",
-        "important_quorum": "0.334000000000000000",
-        "important_threshold": "0.500000000000000000",
-        "important_veto": "0.334000000000000000",
-        "important_penalty": "0.000000000000000000",
-        "important_burn_rate": "0.200000000000000000",
-        "critical_min_deposit": "100000",
-        "critical_min_proposer_deposit_rate": "0.334000000000000000",
-        "critical_max_deposit_period": "120000000000",
-        "critical_voting_period": "120000000000",
-        "critical_quorum": "0.334000000000000000",
-        "critical_threshold": "0.500000000000000000",
-        "critical_veto": "0.334000000000000000",
-        "critical_penalty": "0.000000000000000000",
-        "critical_burn_rate": "0.200000000000000000"
+        "max_validator_cnt": "21",
+        "voting_status_len": "10000",
+        "voting_status_least": "7000",
+        "survival_secs": "28800",
+        "unbond_frozen_height": "1",
+        "max_evidence_age": "1814400000000000",
+        "slash_fraction_double_sign": "0.200000000000000000",
+        "slash_fraction_downtime": "0.000100000000000000"
       },
-      "proposals": null
-    },
-    "qsc": {
-      "ca_root_pub_key": {
-        "type": "tendermint/PubKeyEd25519",
-        "value": "YqnR96cSkDR4Hxb/Dk4KpJVA5fQRprzFNRd+EEsajPg="
-      },
-      "qscs": null
-    },
-    "distribution": {
-      "community_fee_pool": "0",
-      "last_block_proposer": "",
-      "pre_distribute_amount": "0",
-      "validators_history_period": null,
-      "validators_current_period": null,
-      "delegator_earning_info": null,
-      "delegator_income_height": null,
-      "validator_eco_fee_pools": null,
-      "params": {
-        "proposer_reward_rate": "0.010000000000000000",
-        "community_reward_rate": "0.020000000000000000",
-        "delegator_income_period_height": "5",
-        "gas_per_unit_cost": "1000"
-      }
+      "validators": null,
+      "val_votes_info": null,
+      "val_votes_in_window": null,
+      "delegators_info": null,
+      "delegator_unbond_info": null,
+      "redelegations_info": null,
+      "current_validators": null
     }
   }
 }

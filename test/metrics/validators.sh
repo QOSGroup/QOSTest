@@ -7,8 +7,10 @@ source ~/qos/test/utils.sh
 declare -a validator_address
 
 function print_validator_address(){
-  printf "\n==== 验证人地址列表 ====\n\n" | tee -a $1
-  print_array "$(echo ${validator_address[@]})" | tee -a $1
+  if [ "$enable_print_validator_address" == "true" ];then
+    printf "\n==== 验证人地址列表 ====\n\n" | tee -a $1
+    print_array "$(echo ${validator_address[@]})" | tee -a $1
+  fi
 }
 
 # 验证人节点基础信息
@@ -20,22 +22,24 @@ declare -A validator_min_period
 # 打印验证人节点基础信息
 # $1 output file
 function print_validator_brief(){
-  printf "\n==== 验证人节点基础信息 ====\n\n" | tee -a $1
-  if [ ${#validator_address[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator Address        | Owner Address            | Bond Tokens          | Bond Height          | Min Period           |\n" | tee -a $1
-    printf "| ----: | :----------------------: | :----------------------: | -------------------: | -------------------: | -------------------: |\n" | tee -a $1
-    index=0
-    for validator in ${validator_address[@]}
-    do
-      owner="${validator_owner[$validator]}"
-      bondTokens="${validator_bond_tokens[$validator]}"
-      bondHeight="${validator_bond_height[$validator]}"
-      minPeriod="${validator_min_period[$validator]}"
-      printf "| %5s | %24s | %24s | %20s | %20s | %20s |\n" $index "${validator:0-24}" "${owner:0-24}" "$bondTokens" "$bondHeight" "$minPeriod" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_validator_brief" == "true" ];then
+    printf "\n==== 验证人节点基础信息 ====\n\n" | tee -a $1
+    if [ ${#validator_address[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator Address        | Owner Address            | Bond Tokens          | Bond Height          | Min Period           |\n" | tee -a $1
+      printf "| ----: | :----------------------: | :----------------------: | -------------------: | -------------------: | -------------------: |\n" | tee -a $1
+      index=0
+      for validator in ${validator_address[@]}
+      do
+        owner="${validator_owner[$validator]}"
+        bondTokens="${validator_bond_tokens[$validator]}"
+        bondHeight="${validator_bond_height[$validator]}"
+        minPeriod="${validator_min_period[$validator]}"
+        printf "| %5s | %24s | %24s | %20s | %20s | %20s |\n" $index "${validator:0-24}" "${owner:0-24}" "$bondTokens" "$bondHeight" "$minPeriod" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
@@ -48,47 +52,49 @@ declare -A validator_description_details
 # 打印验证人节点描述信息
 # $1 output file
 function print_validator_description(){
-  printf "\n==== 验证人节点描述信息 ====\n\n" | tee -a $1
-  if [ ${#validator_address[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator Address        | Moniker               | Logo                  | Website               | Details               |\n" | tee -a $1
-    printf "| ----: | :----------------------: | :-------------------: | --------------------: | --------------------: | --------------------: |\n" | tee -a $1
-    index=0
-    for validator in ${validator_address[@]}
-    do
-      moniker="${validator_description_moniker[$validator]}"
-      logo="${validator_description_logo[$validator]}"
-      website="${validator_description_website[$validator]}"
-      details="${validator_description_details[$validator]}"
-      # cut to fix
-      if [ "${#validator}" -gt "24" ];then
-        validator=${validator:0-24}
-      fi
-      if [ "${#moniker}" -gt "21" ];then
-        moniker=${moniker:0-21}
-      elif [ "${#moniker}" == "0" ];then
-        moniker="None"
-      fi
-      if [ "${#logo}" -gt "21" ];then
-        logo=${logo:0-21}
-      elif [ "${#logo}" == "0" ];then
-        logo="None"
-      fi
-      if [ "${#website}" -gt "21" ];then
-        website=${website:0-21}
-      elif [ "${#website}" == "0" ];then
-        website="None"
-      fi
-      if [ "${#details}" -gt "21" ];then
-        details=${details:0-21}
-      elif [ "${#details}" == "0" ];then
-        details="None"
-      fi
-      # print
-      printf "| %5s | %24s | %21s | %21s | %21s | %21s |\n" $index "$validator" "$moniker" "$logo" "$website" "$details" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_validator_description" == "true" ];then
+    printf "\n==== 验证人节点描述信息 ====\n\n" | tee -a $1
+    if [ ${#validator_address[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator Address        | Moniker               | Logo                  | Website               | Details               |\n" | tee -a $1
+      printf "| ----: | :----------------------: | :-------------------: | --------------------: | --------------------: | --------------------: |\n" | tee -a $1
+      index=0
+      for validator in ${validator_address[@]}
+      do
+        moniker="${validator_description_moniker[$validator]}"
+        logo="${validator_description_logo[$validator]}"
+        website="${validator_description_website[$validator]}"
+        details="${validator_description_details[$validator]}"
+        # cut to fix
+        if [ "${#validator}" -gt "24" ];then
+          validator=${validator:0-24}
+        fi
+        if [ "${#moniker}" -gt "21" ];then
+          moniker=${moniker:0-21}
+        elif [ "${#moniker}" == "0" ];then
+          moniker="None"
+        fi
+        if [ "${#logo}" -gt "21" ];then
+          logo=${logo:0-21}
+        elif [ "${#logo}" == "0" ];then
+          logo="None"
+        fi
+        if [ "${#website}" -gt "21" ];then
+          website=${website:0-21}
+        elif [ "${#website}" == "0" ];then
+          website="None"
+        fi
+        if [ "${#details}" -gt "21" ];then
+          details=${details:0-21}
+        elif [ "${#details}" == "0" ];then
+          details="None"
+        fi
+        # print
+        printf "| %5s | %24s | %21s | %21s | %21s | %21s |\n" $index "$validator" "$moniker" "$logo" "$website" "$details" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
@@ -101,27 +107,29 @@ declare -A validator_commission_update_time
 # 打印验证人节点佣金比例信息
 # $1 output file
 function print_validator_commission(){
-  printf "\n==== 验证人节点佣金比例信息 ====\n\n" | tee -a $1
-  if [ ${#validator_address[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator Address        | Update Time           | Rate                  | Max Rate              | Max Change Rate       |\n" | tee -a $1
-    printf "| ----: | :----------------------: | :-------------------: | --------------------: | --------------------: | --------------------: |\n" | tee -a $1
-    index=0
-    for validator in ${validator_address[@]}
-    do
-      rate="${validator_commission_rate[$validator]}"
-      max_rate="${validator_commission_max_rate[$validator]}"
-      max_change_rate="${validator_commission_max_change_rate[$validator]}"
-      update_time="${validator_commission_update_time[$validator]}"
-      # cut to fix
-      if [ "${#validator}" -gt "24" ];then
-        validator=${validator:0-24}
-      fi
-      # print
-      printf "| %5s | %24s | %21s | %21s | %21s | %21s |\n" $index "$validator" "$update_time" "$rate" "$max_rate" "$max_change_rate" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_validator_commission" == "true" ];then
+    printf "\n==== 验证人节点佣金比例信息 ====\n\n" | tee -a $1
+    if [ ${#validator_address[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator Address        | Update Time           | Rate                  | Max Rate              | Max Change Rate       |\n" | tee -a $1
+      printf "| ----: | :----------------------: | :-------------------: | --------------------: | --------------------: | --------------------: |\n" | tee -a $1
+      index=0
+      for validator in ${validator_address[@]}
+      do
+        rate="${validator_commission_rate[$validator]}"
+        max_rate="${validator_commission_max_rate[$validator]}"
+        max_change_rate="${validator_commission_max_change_rate[$validator]}"
+        update_time="${validator_commission_update_time[$validator]}"
+        # cut to fix
+        if [ "${#validator}" -gt "24" ];then
+          validator=${validator:0-24}
+        fi
+        # print
+        printf "| %5s | %24s | %21s | %21s | %21s | %21s |\n" $index "$validator" "$update_time" "$rate" "$max_rate" "$max_change_rate" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
@@ -134,32 +142,34 @@ declare -A validator_inactive_description
 # 打印验证人节点状态信息
 # $1 output file
 function print_validator_status(){
-  printf "\n==== 验证人节点状态信息 ====\n\n" | tee -a $1
-  if [ ${#validator_address[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator Address        | Status    | Inactive Height      | Inactive Time        | Inactive Description                |\n" | tee -a $1
-    printf "| ----: | :----------------------: | :-------: | -------------------: | -------------------: | ----------------------------------: |\n" | tee -a $1
-    index=0
-    for validator in ${validator_address[@]}
-    do
-      status="${validator_status[$validator]}"
-      inactive_height="${validator_inactive_height[$validator]}"
-      inactive_time="${validator_inactive_time[$validator]}"
-      inactive_desc="${validator_inactive_description[$validator]}"
-      # cut to fix
-      if [ "${#validator}" -gt "24" ];then
-        validator=${validator:0-24}
-      fi
-      if [ "${#inactive_desc}" -gt "35" ];then
-        inactive_desc=${inactive_desc:0-35}
-      elif [ "${#inactive_desc}" == "0" ];then
-        inactive_desc="None"
-      fi
-      # print
-      printf "| %5s | %24s | %9s | %20s | %20s | %35s |\n" $index "$validator" "$status" "$inactive_height" "$inactive_time" "$inactive_desc" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_validator_status" == "true" ];then
+    printf "\n==== 验证人节点状态信息 ====\n\n" | tee -a $1
+    if [ ${#validator_address[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator Address        | Status    | Inactive Height      | Inactive Time        | Inactive Description                |\n" | tee -a $1
+      printf "| ----: | :----------------------: | :-------: | -------------------: | -------------------: | ----------------------------------: |\n" | tee -a $1
+      index=0
+      for validator in ${validator_address[@]}
+      do
+        status="${validator_status[$validator]}"
+        inactive_height="${validator_inactive_height[$validator]}"
+        inactive_time="${validator_inactive_time[$validator]}"
+        inactive_desc="${validator_inactive_description[$validator]}"
+        # cut to fix
+        if [ "${#validator}" -gt "24" ];then
+          validator=${validator:0-24}
+        fi
+        if [ "${#inactive_desc}" -gt "35" ];then
+          inactive_desc=${inactive_desc:0-35}
+        elif [ "${#inactive_desc}" == "0" ];then
+          inactive_desc="None"
+        fi
+        # print
+        printf "| %5s | %24s | %9s | %20s | %20s | %35s |\n" $index "$validator" "$status" "$inactive_height" "$inactive_time" "$inactive_desc" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
