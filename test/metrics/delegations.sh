@@ -69,74 +69,84 @@ function clear_delegations(){
 # 打印委托人账户地址列表
 # $1 output file
 function print_delegator_account(){
-  printf "\n==== 委托人账户地址列表 ====\n\n" | tee -a $1
-  print_array "$(echo ${delegator_account[@]})" | tee -a $1
+  if [ "$enable_print_delegator_account" == "true" ];then
+    printf "\n==== 委托人账户地址列表 ====\n\n" | tee -a $1
+    print_array "$(echo ${delegator_account[@]})" | tee -a $1
+  fi
 }
 
 # 打印委托主键列表
 # $1 output file
 function print_delegation_key(){
-  printf "\n==== 委托主键列表 ====\n\n" | tee -a $1
-  print_array "$(echo ${delegation_key[@]})" | tee -a $1
+  if [ "$enable_print_delegation_key" == "true" ];then
+    printf "\n==== 委托主键列表 ====\n\n" | tee -a $1
+    print_array "$(echo ${delegation_key[@]})" | tee -a $1
+  fi
 }
 
 # 打印委托信息列表
 # $1 output file
 function print_delegation_info(){
-  printf "\n==== 委托信息列表 ====\n\n" | tee -a $1
-  if [ ${#delegation_key[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator                    | Delegator                    | First Delegate Height | Bond Token           | Is Compound |\n" | tee -a $1
-    printf "| ----: | :--------------------------: | :--------------------------: | --------------------: | -------------------: | ----------: |\n" | tee -a $1
-    index=0
-    for key in ${delegation_key[@]}
-    do
-      val=$(echo $key | awk -F "_H_" '{print $1}')
-      del=$(echo $key | awk -F "_H_" '{print $2}')
-      printf "| %5s | ..%26s | ..%26s | %21s | %20s | %11s |\n" $index ${val:0-26} ${del:0-26} ${first_delegate_height_map[$key]} ${bond_token_map[$key]} ${is_compound_map[$key]} | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_delegation_info" == "true" ];then
+    printf "\n==== 委托信息列表 ====\n\n" | tee -a $1
+    if [ ${#delegation_key[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator                    | Delegator                    | First Delegate Height | Bond Token           | Is Compound |\n" | tee -a $1
+      printf "| ----: | :--------------------------: | :--------------------------: | --------------------: | -------------------: | ----------: |\n" | tee -a $1
+      index=0
+      for key in ${delegation_key[@]}
+      do
+        val=$(echo $key | awk -F "_H_" '{print $1}')
+        del=$(echo $key | awk -F "_H_" '{print $2}')
+        printf "| %5s | ..%26s | ..%26s | %21s | %20s | %11s |\n" $index ${val:0-26} ${del:0-26} ${first_delegate_height_map[$key]} ${bond_token_map[$key]} ${is_compound_map[$key]} | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
 # 打印上期委托收益列表(已发放)
 # $1 output file
 function print_delegation_last_income(){
-  printf "\n==== 上期委托收益列表(已发放) ====\n\n" | tee -a $1
-  if [ ${#delegation_key[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator                | Delegator                | Validator Period     | Last Income Height   | Last Income Amount   |\n" | tee -a $1
-    printf "| ----: | :----------------------: | :----------------------: | -------------------: | -------------------: | -------------------: |\n" | tee -a $1
-    index=0
-    for key in ${delegation_key[@]}
-    do
-      val=$(echo $key | awk -F "_H_" '{print $1}')
-      del=$(echo $key | awk -F "_H_" '{print $2}')
-      printf "| %5s | ..%22s | ..%22s | %20s | %20s | %20s |\n" $index ${val:0-22} ${del:0-22} ${previous_validator_period_map[$key]} ${last_income_calHeight_map[$key]} ${last_income_calFees_map[$key]} | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_delegation_last_income" == "true" ];then
+    printf "\n==== 上期委托收益列表(已发放) ====\n\n" | tee -a $1
+    if [ ${#delegation_key[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator                | Delegator                | Validator Period     | Last Income Height   | Last Income Amount   |\n" | tee -a $1
+      printf "| ----: | :----------------------: | :----------------------: | -------------------: | -------------------: | -------------------: |\n" | tee -a $1
+      index=0
+      for key in ${delegation_key[@]}
+      do
+        val=$(echo $key | awk -F "_H_" '{print $1}')
+        del=$(echo $key | awk -F "_H_" '{print $2}')
+        printf "| %5s | ..%22s | ..%22s | %20s | %20s | %20s |\n" $index ${val:0-22} ${del:0-22} ${previous_validator_period_map[$key]} ${last_income_calHeight_map[$key]} ${last_income_calFees_map[$key]} | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
 # 打印本期委托收益列表(待发放)
 # $1 output file
 function print_delegation_current_income(){
-  printf "\n==== 本期委托收益列表(待发放) ====\n\n" | tee -a $1
-  if [ ${#delegation_key[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Validator                           | Delegator                           | Earns Starting Height | Historical Rewards   |\n" | tee -a $1
-    printf "| ----: | :---------------------------------: | :---------------------------------: | --------------------: | -------------------: |\n" | tee -a $1
-    index=0
-    for key in ${delegation_key[@]}
-    do
-      val=$(echo $key | awk -F "_H_" '{print $1}')
-      del=$(echo $key | awk -F "_H_" '{print $2}')
-      printf "| %5s | ..%33s | ..%33s | %21s | %20s |\n" $index ${val:0-33} ${del:0-33} ${earns_starting_height_map[$key]} ${historical_rewards_map[$key]} | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_delegation_current_income" == "true" ];then
+    printf "\n==== 本期委托收益列表(待发放) ====\n\n" | tee -a $1
+    if [ ${#delegation_key[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Validator                           | Delegator                           | Earns Starting Height | Historical Rewards   |\n" | tee -a $1
+      printf "| ----: | :---------------------------------: | :---------------------------------: | --------------------: | -------------------: |\n" | tee -a $1
+      index=0
+      for key in ${delegation_key[@]}
+      do
+        val=$(echo $key | awk -F "_H_" '{print $1}')
+        del=$(echo $key | awk -F "_H_" '{print $2}')
+        printf "| %5s | ..%33s | ..%33s | %21s | %20s |\n" $index ${val:0-33} ${del:0-33} ${earns_starting_height_map[$key]} ${historical_rewards_map[$key]} | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 

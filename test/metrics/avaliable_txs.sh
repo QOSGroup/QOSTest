@@ -9,8 +9,10 @@ declare -a avaliable_txs
 # 打印可用交易列表
 # $1 output file
 function print_avaliable_txs(){
-  printf "\n==== 可用交易列表 ====\n\n" | tee -a $1
-  print_array "$(echo ${avaliable_txs[@]})" | tee -a $1
+  if [ "$enable_print_avaliable_txs" == "true" ];then
+    printf "\n==== 可用交易列表 ====\n\n" | tee -a $1
+    print_array "$(echo ${avaliable_txs[@]})" | tee -a $1
+  fi
 }
 
 # 更新可用交易列表

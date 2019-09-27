@@ -38,37 +38,39 @@ function clear_guardians(){
 # 打印特权用户信息列表
 # $1 output file
 function print_guardians(){
-  printf "\n==== 特权用户信息列表 ====\n\n" | tee -a $1
-  if [ ${#guardian_address[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Guardian Type    | Guardian Address         | Guardian Creator         | Guardian Description                             |\n" | tee -a $1
-    printf "| ----: | :--------------: | :----------------------: | :----------------------: | -----------------------------------------------: |\n" | tee -a $1
-    index=0
-    for address in ${guardian_address[@]}
-    do
-      type="${guardian_type[$address]}"
-      creator="${guardian_creator[$address]}"
-      description="${guardian_description[$address]}"
-      # cut tail to fit table
-      if [ "${#type}" -gt "16" ];then
-        type=${type:0-16}
-      fi
-      if [ "${#address}" -gt "24" ];then
-        address=${address:0-24}
-      fi
-      if [ "${#creator}" -gt "24" ];then
-        creator=${creator:0-24}
-      elif [ "${#creator}" == "0" ];then
-        creator="None"
-      fi
-      if [ "${#description}" -gt "48" ];then
-        description=${description:0-48}
-      fi
-      # print
-      printf "| %5s | %16s | %24s | %24s | %48s |\n" $index "$type" "$address" "$creator" "$description" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_guardians" == "true" ];then
+    printf "\n==== 特权用户信息列表 ====\n\n" | tee -a $1
+    if [ ${#guardian_address[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Guardian Type    | Guardian Address         | Guardian Creator         | Guardian Description                             |\n" | tee -a $1
+      printf "| ----: | :--------------: | :----------------------: | :----------------------: | -----------------------------------------------: |\n" | tee -a $1
+      index=0
+      for address in ${guardian_address[@]}
+      do
+        type="${guardian_type[$address]}"
+        creator="${guardian_creator[$address]}"
+        description="${guardian_description[$address]}"
+        # cut tail to fit table
+        if [ "${#type}" -gt "16" ];then
+          type=${type:0-16}
+        fi
+        if [ "${#address}" -gt "24" ];then
+          address=${address:0-24}
+        fi
+        if [ "${#creator}" -gt "24" ];then
+          creator=${creator:0-24}
+        elif [ "${#creator}" == "0" ];then
+          creator="None"
+        fi
+        if [ "${#description}" -gt "48" ];then
+          description=${description:0-48}
+        fi
+        # print
+        printf "| %5s | %16s | %24s | %24s | %48s |\n" $index "$type" "$address" "$creator" "$description" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 

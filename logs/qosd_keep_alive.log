@@ -203,3 +203,120 @@ move /home/wangzijie/qos/logs/qosd_latest.log to /home/wangzijie/qos/logs/qosd_2
 2019-09-23_12:13:39 [ ok ] Service qosd is alive.
 2019-09-23_12:14:09 [ ok ] Service qosd is alive.
 2019-09-23_12:14:39 [ ok ] Service qosd is alive.
+2019-09-27_15:42:59 [failed] Service qosd is down.
+move /home/test/qos/logs/qosd_latest.log to /home/test/qos/logs/qosd_2019-09-27_15:42:59.log
+2019-09-27_15:42:59 [failed] 1st try to start service qosd.
+2019-09-27_15:42:59 [failed] Result: 
+2019-09-27_15:42:59 [ ok ] Service qosd is started.
+2019-09-27_15:43:29 [ ok ] Service qosd is alive.
+2019-09-27_15:43:59 [ ok ] Service qosd is alive.
+2019-09-27_15:44:29 [ ok ] Service qosd is alive.
+2019-09-27_15:44:59 [ ok ] Service qosd is alive.
+2019-09-27_15:45:29 [ ok ] Service qosd is alive.
+2019-09-27_15:45:59 [ ok ] Service qosd is alive.
+2019-09-27_15:46:29 [ ok ] Service qosd is alive.
+2019-09-27_15:46:59 [ ok ] Service qosd is alive.
+2019-09-27_15:47:29 [ ok ] Service qosd is alive.
+2019-09-27_15:47:59 [ ok ] Service qosd is alive.
+2019-09-27_15:48:29 [ ok ] Service qosd is alive.
+2019-09-27_15:48:59 [ ok ] Service qosd is alive.
+2019-09-27_15:49:46 [failed] Service qosd is down.
+move /home/test/qos/logs/qosd_latest.log to /home/test/qos/logs/qosd_2019-09-27_15:49:46.log
+2019-09-27_15:49:46 [failed] 1st try to start service qosd.
+2019-09-27_15:49:46 [failed] Result: 
+2019-09-27_15:49:46 [ ok ] Service qosd is started.
+2019-09-27_15:50:16 [ ok ] Service qosd is alive.
+2019-09-27_15:50:46 [ ok ] Service qosd is alive.
+2019-09-27_15:51:16 [ ok ] Service qosd is alive.
+2019-09-27_15:51:46 [ ok ] Service qosd is alive.
+2019-09-27_15:52:16 [ ok ] Service qosd is alive.
+2019-09-27_15:52:46 [ ok ] Service qosd is alive.
+2019-09-27_15:53:16 [failed] Service qosd is down.
+move /home/test/qos/logs/qosd_latest.log to /home/test/qos/logs/qosd_2019-09-27_15:53:16.log
+2019-09-27_15:53:16 [failed] 1st try to start service qosd.
+2019-09-27_15:53:16 [failed] Result: 
+2019-09-27_15:53:16 [ ok ] Service qosd is started.
+2019-09-27_15:53:46 [ ok ] Service qosd is alive.
+2019-09-27_15:54:07 [failed] Service qosd is down.
+move /home/test/qos/logs/qosd_latest.log to /home/test/qos/logs/qosd_2019-09-27_15:54:07.log
+2019-09-27_15:54:07 [failed] 1st try to start service qosd.
+2019-09-27_15:54:07 [failed] Result: 
+2019-09-27_15:54:07 [ ok ] Service qosd is started.
+2019-09-27_15:54:37 [ ok ] Service qosd is alive.
+2019-09-27_15:55:07 [ ok ] Service qosd is alive.
+2019-09-27_15:55:37 [ ok ] Service qosd is alive.
+2019-09-27_15:56:07 [ ok ] Service qosd is alive.
+2019-09-27_15:56:37 [ ok ] Service qosd is alive.
+2019-09-27_15:57:07 [ ok ] Service qosd is alive.
+2019-09-27_15:57:37 [ ok ] Service qosd is alive.
+2019-09-27_15:58:07 [ ok ] Service qosd is alive.
+2019-09-27_15:58:37 [ ok ] Service qosd is alive.
+2019-09-27_15:59:07 [ ok ] Service qosd is alive.
+2019-09-27_15:59:37 [ ok ] Service qosd is alive.
+2019-09-27_16:00:07 [ ok ] Service qosd is alive.
+2019-09-27_16:00:37 [ ok ] Service qosd is alive.
+2019-09-27_16:01:07 [ ok ] Service qosd is alive.
+2019-09-27_16:01:37 [ ok ] Service qosd is alive.
+2019-09-27_16:02:07 [ ok ] Service qosd is alive.
+2019-09-27_16:02:37 [ ok ] Service qosd is alive.
+2019-09-27_16:03:07 [ ok ] Service qosd is alive.
+2019-09-27_16:03:37 [ ok ] Service qosd is alive.
+2019-09-27_16:04:07 [ ok ] Service qosd is alive.
+2019-09-27_16:04:37 [ ok ] Service qosd is alive.
+2019-09-27_16:05:07 [ ok ] Service qosd is alive.
+2019-09-27_16:05:37 [ ok ] Service qosd is alive.
+2019-09-27_16:06:07 [ ok ] Service qosd is alive.
+2019-09-27_16:06:37 [ ok ] Service qosd is alive.
+2019-09-27_16:07:07 [ ok ] Service qosd is alive.
+2019-09-27_16:07:37 [ ok ] Service qosd is alive.
+2019-09-27_16:08:07 [ ok ] Service qosd is alive.
+2019-09-27_16:08:37 [ ok ] Service qosd is alive.
+2019-09-27_16:09:07 [ ok ] Service qosd is alive.
+2019-09-27_16:09:37 [ ok ] Service qosd is alive.
+2019-09-27_16:10:07 [ ok ] Service qosd is alive.
+2019-09-27_16:10:37 [ ok ] Service qosd is alive.
+2019-09-27_16:11:07 [ ok ] Service qosd is alive.
+2019-09-27_16:11:37 [ ok ] Service qosd is alive.
+2019-09-27_16:12:07 [ ok ] Service qosd is alive.
+2019-09-27_16:12:37 [ ok ] Service qosd is alive.
+2019-09-27_16:13:07 [ ok ] Service qosd is alive.
+2019-09-27_16:13:37 [ ok ] Service qosd is alive.
+2019-09-27_16:14:07 [ ok ] Service qosd is alive.
+2019-09-27_16:14:37 [ ok ] Service qosd is alive.
+2019-09-27_16:15:07 [ ok ] Service qosd is alive.
+2019-09-27_16:15:37 [ ok ] Service qosd is alive.
+2019-09-27_16:16:08 [ ok ] Service qosd is alive.
+2019-09-27_16:16:38 [ ok ] Service qosd is alive.
+2019-09-27_16:17:08 [ ok ] Service qosd is alive.
+2019-09-27_16:17:38 [ ok ] Service qosd is alive.
+2019-09-27_16:18:08 [ ok ] Service qosd is alive.
+2019-09-27_16:18:38 [ ok ] Service qosd is alive.
+2019-09-27_16:19:08 [ ok ] Service qosd is alive.
+2019-09-27_16:19:38 [ ok ] Service qosd is alive.
+2019-09-27_16:20:08 [ ok ] Service qosd is alive.
+2019-09-27_16:20:38 [ ok ] Service qosd is alive.
+2019-09-27_16:21:08 [ ok ] Service qosd is alive.
+2019-09-27_16:21:38 [ ok ] Service qosd is alive.
+2019-09-27_16:22:08 [ ok ] Service qosd is alive.
+2019-09-27_16:22:38 [ ok ] Service qosd is alive.
+2019-09-27_16:23:08 [ ok ] Service qosd is alive.
+2019-09-27_16:23:38 [ ok ] Service qosd is alive.
+2019-09-27_16:24:08 [ ok ] Service qosd is alive.
+2019-09-27_16:24:38 [ ok ] Service qosd is alive.
+2019-09-27_16:25:08 [ ok ] Service qosd is alive.
+2019-09-27_16:25:38 [ ok ] Service qosd is alive.
+2019-09-27_16:26:08 [ ok ] Service qosd is alive.
+2019-09-27_16:26:38 [ ok ] Service qosd is alive.
+2019-09-27_16:27:08 [ ok ] Service qosd is alive.
+2019-09-27_16:27:38 [ ok ] Service qosd is alive.
+2019-09-27_16:28:08 [ ok ] Service qosd is alive.
+2019-09-27_16:28:38 [ ok ] Service qosd is alive.
+2019-09-27_16:29:08 [ ok ] Service qosd is alive.
+2019-09-27_16:29:38 [ ok ] Service qosd is alive.
+2019-09-27_16:30:08 [ ok ] Service qosd is alive.
+2019-09-27_16:30:38 [ ok ] Service qosd is alive.
+2019-09-27_16:31:08 [ ok ] Service qosd is alive.
+2019-09-27_16:31:38 [ ok ] Service qosd is alive.
+2019-09-27_16:32:08 [ ok ] Service qosd is alive.
+2019-09-27_16:32:38 [ ok ] Service qosd is alive.
+2019-09-27_16:33:08 [ ok ] Service qosd is alive.

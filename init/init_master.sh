@@ -3,7 +3,7 @@
 # configs
 echo "1. 准备环境参数"
 
-password="wf.cy.zs.wzj"
+password="12345678"
 
 qosd_config_dir=~/.qosd
 qoscli_config_dir=~/.qoscli

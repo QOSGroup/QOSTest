@@ -3,12 +3,38 @@
 local_host=$(ifconfig -a |grep inet |grep -v inet6 |grep -v 127 |head -n 1 |awk '{print $2}')
 uploader=~/qos/expect/upload.expect
 
+# metrics display control
+enable_print_key_account_map="false"
+enable_print_accounts="false"
+enable_print_account_balance="true"
+
+enable_print_avaliable_txs="false"
+
+enable_print_delegator_account="false"
+enable_print_delegation_key="false"
+enable_print_delegation_info="false"
+enable_print_delegation_last_income="false"
+enable_print_delegation_current_income="false"
+
+enable_print_guardians="false"
+
+enable_print_validator_address="false"
+enable_print_validator_brief="false"
+enable_print_validator_description="false"
+enable_print_validator_commission="false"
+enable_print_validator_status="false"
+
+enable_print_variables="true"
+
+# local or remote ssh config
 local=1
 
 # local ssh config
-ssh_hosts=(127.0.0.1)
-ssh_usr="wangzijie"
-ssh_pwd="wf.cy.zs.wzj"
+ssh_hosts=(192.168.10.129 192.168.10.130)
+ssh_usr="test"
+ssh_pwd_or_pem="pwd" # pwd | pem
+ssh_pwd="12345678"
+ssh_pem="~/qos/test.pem"
 ssh_qoscli="~/qos/bin/qoscli"
 ssh_qosd="~/qos/bin/qosd"
 ssh_qos_pwd="12345678"

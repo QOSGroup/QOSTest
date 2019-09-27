@@ -51,13 +51,15 @@ function update_variables(){
 # 打印状态变量情况: 最新块高度和出块时间, 社区费池, 以及提案ID
 # $1 output_file
 function print_variables(){
-  printf "\n==== 最新块高度, 出块时间以及最新提案ID ====\n\n" | tee -a $1
-  printf "| Latest Block Height  | Latest Block Time              | Latest Proposal ID   |\n" | tee -a $1
-  printf "| -------------------: | :----------------------------: | -------------------: |\n" | tee -a $1
-  printf "| %+20s | %+30s | %+20s |\n" $latest_block_height $latest_block_time $latest_proposal_id | tee -a $1
+  if [ "$enable_print_variables" == "true" ];then
+    printf "\n==== 最新块高度, 出块时间以及最新提案ID ====\n\n" | tee -a $1
+    printf "| Latest Block Height  | Latest Block Time              | Latest Proposal ID   |\n" | tee -a $1
+    printf "| -------------------: | :----------------------------: | -------------------: |\n" | tee -a $1
+    printf "| %+20s | %+30s | %+20s |\n" $latest_block_height $latest_block_time $latest_proposal_id | tee -a $1
 
-  printf "\n==== 社区费池状态 ====\n\n" | tee -a $1
-  printf "| Community Fee        | Community Fee Change |\n" | tee -a $1
-  printf "| -------------------: | -------------------: |\n" | tee -a $1
-  printf "| %+20s | %+20s |\n" $community_fee $community_fee_change | tee -a $1
+    printf "\n==== 社区费池状态 ====\n\n" | tee -a $1
+    printf "| Community Fee        | Community Fee Change |\n" | tee -a $1
+    printf "| -------------------: | -------------------: |\n" | tee -a $1
+    printf "| %+20s | %+20s |\n" $community_fee $community_fee_change | tee -a $1
+  fi
 }

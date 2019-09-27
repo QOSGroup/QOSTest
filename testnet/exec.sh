@@ -25,7 +25,7 @@ function run_local_qoscli(){
 # $1 host
 # $2 cmd
 # $3 inputs
-function run_remote_cmd(){
+function run_remote_cmd_using_pwd(){
   # expect run_cmd_via_ssh.expect <ssh_host> <ssh_usr> <ssh_pwd> <cmd> [inputs]
   ts1=$(get_timestamp)
   expect_script=~/qos/expect/run_cmd_via_ssh.expect
@@ -54,6 +54,44 @@ function run_remote_cmd(){
 }
 # run_remote_cmd 192.168.2.128 "~/qos/bin/qoscli tx transfer --senders 'node,100qos;alice,100qos' --receivers 'bob,100qos;charles,100qos' --indent" "12345678 12345678 55556767"
 
+function run_remote_cmd_using_pem(){
+  # expect run_cmd_via_ssh_using_private_key.expect <ssh_host> <ssh_usr> <ssh_pem> <cmd> [inputs]
+  ts1=$(get_timestamp)
+  expect_script=~/qos/expect/run_cmd_via_ssh_using_private_key.expect
+  expect_cmd="expect 2>&1 $expect_script $1 $ssh_usr $ssh_pem '$2' $3"
+  output=$(eval "$expect_cmd")
+  ts2=$(get_timestamp)
+  delta1=$((ts2-ts1))
+  # remove input from output
+  uniq_input=$(echo "$3" | awk '{for(i=1;i<=NF;i++){print $i}}' | sort -u | uniq)
+  for input in $uniq_input
+  do
+    output=$(echo "$output" | sed "/^$input\r$/d")
+  done
+  ts3=$(get_timestamp)
+  delta2=$((ts3-ts2))
+  # return output
+  echo
+  echo "--------------------------------"
+  echo "Expect命令:"
+  echo "$expect_cmd"
+  echo "命令执行结果:"
+  echo "$output"
+  echo "命令执行耗时: $delta1 ms" 
+  echo "结果处理耗时: $delta2 ms" 
+  echo "--------------------------------" 
+}
+
+# $1 host
+# $2 cmd
+# $3 inputs
+function run_remote_cmd(){
+  if [ "$ssh_pwd_or_pem" == "pwd" ] then;
+    run_remote_cmd_using_pwd $1 "$2" "$3"
+  elif [ "$ssh_pwd_or_pem" == "pem" ] then;
+    run_remote_cmd_using_pem $1 "$2" "$3"
+  fi
+}
 
 # $1 host
 # $2 cmd

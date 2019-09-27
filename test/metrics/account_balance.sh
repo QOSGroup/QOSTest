@@ -30,37 +30,42 @@ declare -A account_star_diff_map
 # 打印本地密钥名称-账户地址映射表
 # $1 output_file
 function print_key_account_map(){
-  printf "\n==== 本地密钥名称-账户地址映射表 ====\n\n" | tee -a $1
-  if [ ${#key_account_map[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Account Address                               | Key Name                                                                 |\n" | tee -a $1
-    printf "| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |\n" | tee -a $1
-    index=0
-    for key in $(echo "${!key_account_map[@]}" | tr ' ' '\n' | sort -u)
-    do
-      printf "| %5s | %45s | %-72s |\n" $index "${key_account_map[$key]}" $key | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_key_account_map" == "true" ];then
+    printf "\n==== 本地密钥名称-账户地址映射表 ====\n\n" | tee -a $1
+    if [ ${#key_account_map[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Account Address                               | Key Name                                                                 |\n" | tee -a $1
+      printf "| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |\n" | tee -a $1
+      index=0
+      for key in $(echo "${!key_account_map[@]}" | tr ' ' '\n' | sort -u)
+      do
+        printf "| %5s | %45s | %-72s |\n" $index "${key_account_map[$key]}" $key | tee -a $1
+        let index++
+      done
+    fi
   fi
+  
 }
 
 # 打印用户账户地址列表
 # $1 output file
 function print_accounts(){
-  printf "\n==== 用户账户地址列表 ====\n\n" | tee -a $1
-  #print_array "$(echo ${accounts[@]})" | tee -a $1
-  if [ ${#accounts[@]} == 0 ];then
-    printf "Empty\n"
-  else
-    printf "| Index | Account Address                               | Key Name                                                                 |\n" | tee -a $1
-    printf "| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |\n" | tee -a $1
-    index=0
-    for account in ${accounts[@]}
-    do
-      printf "| %5s | %45s | %-72s |\n" $index $account "${account_key_map[$account]}" | tee -a $1
-      let index++
-    done
+  if [ "$enable_print_accounts" == "true" ];then
+    printf "\n==== 用户账户地址列表 ====\n\n" | tee -a $1
+    #print_array "$(echo ${accounts[@]})" | tee -a $1
+    if [ ${#accounts[@]} == 0 ];then
+      printf "Empty\n"
+    else
+      printf "| Index | Account Address                               | Key Name                                                                 |\n" | tee -a $1
+      printf "| ----: | :-------------------------------------------: | -----------------------------------------------------------------------: |\n" | tee -a $1
+      index=0
+      for account in ${accounts[@]}
+      do
+        printf "| %5s | %45s | %-72s |\n" $index $account "${account_key_map[$account]}" | tee -a $1
+        let index++
+      done
+    fi
   fi
 }
 
@@ -103,8 +108,10 @@ function print_account_star(){
 # 打印用户账户余额情况
 # $1 output file
 function print_account_balance(){
-  print_account_qos $1
-  print_account_star $1
+  if [ "$enable_print_account_balance" == "true" ];then
+    print_account_qos $1
+    print_account_star $1
+  fi
 }
 
 
